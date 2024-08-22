@@ -55,7 +55,7 @@ func main() {
 		if len(numbers) > 1 {
 			mean, stddev := calculateStatistics(numbers)
 			lowerLimit, upperLimit := guess_it_1(mean, stddev)
-			fmt.Printf("%d %d", int(lowerLimit), int(upperLimit))
+			fmt.Printf("%d %d\n", int(lowerLimit), int(upperLimit))
 		}
 	}
 
