@@ -1,5 +1,4 @@
-#!bin/bash
+#!/bin/bash
 
 cd student
-go run main.go
-
+go run .
