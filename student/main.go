@@ -25,37 +25,45 @@ func calculateStatistics(numbers []float64) (mean, stddev float64) {
 	return
 }
 
+// Function to guess the range for the next number
 func guess_it_1(mean, stddev float64) (lowerLimit, upperLimit float64) {
 	lowerLimit = mean - (3 * stddev)
 	upperLimit = mean + (3 * stddev)
 	return
 }
 
+// Window size for calculation
 const window int = 8
 
 func main() {
 	scanner := bufio.NewScanner(os.Stdin)
 	var numbers []float64
+
 	for scanner.Scan() {
 		line := scanner.Text()
 
-		number, err := strconv.ParseInt(line, 10, 64)
+		number, err := strconv.ParseFloat(line, 64)
 		if err != nil {
 			fmt.Println("Error converting to number:", err)
 			os.Exit(1)
 		}
 
-		// use a window slide to be more precise in the approximation
-		numbers = append(numbers, float64(number))
+		// Convert to float64 and append to numbers
+		numbers = append(numbers, number)
 		if len(numbers) > window {
 			numbers = numbers[len(numbers)-window:]
 		}
 
-		// ignore the calculation if the number provided is only 1, should be 2 and above...
+		// Provide a range for a single number
+		// if len(numbers) == 1 {
+		// 	lowerLimit := numbers[0] - 10 // Use a reasonable default range
+		// 	upperLimit := numbers[0] + 10
+		// 	fmt.Printf("%d %d\n", int(math.Round(lowerLimit)), int(math.Round(upperLimit)))
+		// }
 		if len(numbers) > 1 {
 			mean, stddev := calculateStatistics(numbers)
 			lowerLimit, upperLimit := guess_it_1(mean, stddev)
-			fmt.Printf("%d %d\n", int(lowerLimit), int(upperLimit))
+			fmt.Printf("%d %d\n", int(math.Round(lowerLimit)), int(math.Round(upperLimit)))
 		}
 	}
 
@@ -64,3 +72,5 @@ func main() {
 		os.Exit(1)
 	}
 }
+
+//Hey Reimund came up with this logic!
